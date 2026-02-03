@@ -241,7 +241,10 @@ function Resolve-CursorInstallPath {
         $candidates += $regCandidates
     }
 
-    $fixedDrives = [IO.DriveInfo]::GetDrives() | Where-Object { $_.DriveType -eq 'Fixed' }
+    $fixedDrives = [IO.DriveInfo]::GetDrives() | Where-Object { 
+    $_.DriveType -eq 'Fixed' -and $_.Name -eq 'C:\'
+    }
+
     foreach ($drive in $fixedDrives) {
         $root = $drive.RootDirectory.FullName
         $candidates += (Join-Path $root "Program Files\Cursor")
